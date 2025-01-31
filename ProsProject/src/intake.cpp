@@ -1,5 +1,6 @@
 #include "main.h"
 
+pros::Controller controller(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup intake_mg({13, 14});
 enum intake_state {
   REVERSE = 1,
@@ -8,18 +9,18 @@ enum intake_state {
 }; 
 enum intake_state state = STOPPED;
 void intakeControls() {
-    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)) {
         switch(state) {
-            case 2:
+            case STOPPED:
                 state = FORWARD;
                 break;
-            case 3:
+            case FORWARD:
                 state = STOPPED;
                 break;
             default:
                 break;
         }
-    } else if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_R2)) 
+    } else if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R2)) 
     {
         state = REVERSE;
     }
